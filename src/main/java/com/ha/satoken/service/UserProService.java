@@ -5,7 +5,6 @@ import com.ha.satoken.data.entity.UserProEntity;
 import com.ha.satoken.data.model.ProModel;
 import com.ha.satoken.data.repository.UserProRepository;
 import com.ha.satoken.data.repository.UserRepository;
-import com.ha.satoken.eunm.ProType;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

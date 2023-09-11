@@ -1,10 +1,9 @@
 package com.ha.satoken.controller;
 
 import cn.dev33.satoken.stp.StpUtil;
-import com.ha.satoken.data.entity.UserProEntity;
 import com.ha.satoken.data.model.ProModel;
 import com.ha.satoken.data.repository.UserProRepository;
-import com.ha.satoken.eunm.ProType;
+import com.ha.satoken.data.eunm.ProType;
 import com.ha.satoken.service.UserProService;
 import com.ha.satoken.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;

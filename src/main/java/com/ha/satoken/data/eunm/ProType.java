@@ -1,4 +1,4 @@
-package com.ha.satoken.eunm;
+package com.ha.satoken.data.eunm;
 
 import java.util.Arrays;
 

@@ -5,7 +5,7 @@ import com.ha.satoken.data.entity.UserProEntity;
 import com.ha.satoken.data.model.UserModel;
 import com.ha.satoken.data.repository.UserProRepository;
 import com.ha.satoken.data.repository.UserRepository;
-import com.ha.satoken.eunm.ProType;
+import com.ha.satoken.data.eunm.ProType;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
