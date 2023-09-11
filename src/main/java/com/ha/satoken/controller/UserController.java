@@ -39,7 +39,10 @@ public class UserController {
                     .setTimeout(60 * 60 * 24 * 7)    // 指定此次登录token的有效期, 单位:秒 （如未指定，自动取全局配置的 timeout 值）
             );
             List<String> list = new ArrayList<>();
-            proRepository.findByUserId(user.getId()).stream().map(list::add).collect(Collectors.toList());
+            proRepository.findAllByUserId(user.getId()).stream().map(e -> {
+                list.add(e.getPromission());
+                return e;
+            }).collect(Collectors.toList());
             String role = "user";
             for (String s:list) {
                 if (s.equals("admin")){

@@ -62,7 +62,6 @@ public class PromissionController {
     public void addPro(Long id, Integer proId){
         String pro = ProType.getEnum(proId).getName();
         userProService.save(id,pro);
-
     }
 
 

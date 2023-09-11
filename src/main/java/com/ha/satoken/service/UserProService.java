@@ -24,40 +24,39 @@ public class UserProService {
         this.userRepository = userRepository;
     }
 
-    public List<String> getUserProList(long loginIdAsLong) {
+    public List<String> getUserProList(long id) {
         List<String> list = new ArrayList<>();
-        repository.findByUserId(loginIdAsLong).stream().map(list::add).collect(Collectors.toList());
+        repository.findAllByUserId(id).stream().map(e -> {
+            list.add(e.getPromission());
+            return e;
+        }).collect(Collectors.toList());
         return list;
     }
 
     public List<ProModel> getAllUserPro() {
         List<ProModel> list = new ArrayList<>();
-        repository.findAll().stream().map(pro -> {
+        userRepository.findAll().stream().map(user -> {
             ProModel model = new ProModel();
-            model.setId(pro.getUserId());
-            model.setName(getUser(pro.getUserId()).getName());
-            model.setProList(getUserProList(pro.getUserId()));
-            return model;
+            model.setId(user.getId());
+            model.setName(user.getName());
+            model.setProList(getUserProList(user.getId()));
+            list.add(model);
+            return user;
         }).collect(Collectors.toList());
         return list;
     }
 
     public void update(Long id, String pro) {
-        UserProEntity e = repository.findAllByUserId(id);
-        e.setPromission(pro);
-        repository.save(e);
+        repository.findById(id).ifPresent(e -> {
+            e.setPromission(pro);
+            repository.save(e);
+        });
     }
 
     public void save(Long id, String pro) {
         UserProEntity e = new UserProEntity();
         e.setUserId(id);
         e.setPromission(pro);
-        repository.save(e);
-    }
-    public void addNewUser(String username) {
-        UserProEntity e = new UserProEntity();
-        e.setUserId(getUser(username).getId());
-        e.setPromission(ProType.USER.getName());
         repository.save(e);
     }
     public UserEntity getUser(Long id) {
@@ -69,8 +68,5 @@ public class UserProService {
             entity.setName("does not exist this user");
         }
         return entity;
-    }
-    public UserEntity getUser(String username) {
-        return userRepository.findByUsername(username);
     }
 }

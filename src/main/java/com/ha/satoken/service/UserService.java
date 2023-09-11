@@ -1,19 +1,26 @@
 package com.ha.satoken.service;
 
 import com.ha.satoken.data.entity.UserEntity;
+import com.ha.satoken.data.entity.UserProEntity;
 import com.ha.satoken.data.model.UserModel;
+import com.ha.satoken.data.repository.UserProRepository;
 import com.ha.satoken.data.repository.UserRepository;
+import com.ha.satoken.eunm.ProType;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 
 @Service
+@Transactional
 public class UserService {
     private final UserRepository repository;
+    private final UserProRepository proRepository;
 
-    public UserService(UserRepository repository) {
+    public UserService(UserRepository repository, UserProRepository proRepository) {
         this.repository = repository;
+        this.proRepository = proRepository;
     }
 
     public UserEntity getUser(String username) {
@@ -38,6 +45,10 @@ public class UserService {
         entity.setPassword(user.getPassword());
         repository.save(entity);
         //添加权限
+        UserProEntity e = new UserProEntity();
+        e.setUserId(getUser(user.getUsername()).getId());
+        e.setPromission(ProType.USER.getName());
+        proRepository.save(e);
     }
 
     public void updateUser(UserModel user) {
@@ -52,6 +63,7 @@ public class UserService {
     public void deleteUser(UserModel user) {
         repository.deleteById(user.getId());
         //删除用户权限
+        proRepository.findAllByUserId(user.getId()).forEach(e -> proRepository.deleteById(e.getId()));
     }
 
     public List<UserEntity> getAllUser() {
