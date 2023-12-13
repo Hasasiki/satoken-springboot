@@ -69,4 +69,13 @@ public class UserService {
     public List<UserEntity> getAllUser() {
         return repository.findAll();
     }
+
+    public UserEntity getUserByOpenId(String openId) {
+        //todo uncomment this when user entity has openId field
+        //判断是否存在该用户
+        if (repository.findByOpenId(openId).isPresent()) {
+            return repository.findByOpenId(openId).orElse(null);
+        }
+        return null;
+    }
 }
