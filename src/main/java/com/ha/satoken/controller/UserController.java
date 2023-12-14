@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
@@ -101,41 +102,51 @@ public class UserController {
     // if you need use this, you need to add a new column named openid in table user
     @RequestMapping("wxfLogin")
     public SaResult firstLoginByWx(String username, String password, String code) {
-//        UserEntity user = service.getUser(username);
-//        String openid = WeChatUtil.getOpenId(code);
-//        //todo 测试替换,实测删除
+//        if (Objects.equals(username, "") || Objects.equals(password, "") || Objects.equals(code, "")) {
+//            return SaResult.error("请填写完整信息");
+//        }else {
+//            UserEntity user = service.getUser(username);
+//            String openid = WeChatUtil.getOpenId(code);
+//            //todo 测试替换,实测删除
 ////        String openid = "123456";
 //
-//        if (openid.equals("invalid")) {
-//            return SaResult.error("code无效");
-//        }
-//
-//        if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
-//            //判断openid是否为空,如果为空则为首次登录,更新openid,如果不为空则比较openid是否相同,如果相同则登录成功,如果不同则登录失败
-//            if (user.getOpenId() == null || Objects.equals(user.getOpenId(), "")) {
-//                //向该用户添加openid
-//                UserModel userModel = new UserModel();
-//                userModel.setId(user.getId());
-//                userModel.setName(user.getName());
-//                userModel.setUsername(user.getUsername());
-//                userModel.setPassword(user.getPassword());
-//                userModel.setOpenId(openid);
-//                //首次登录将openid记入数据库
-//                service.updateUser(userModel);
-//                service.login(user);
-//                String token = StpUtil.getTokenValue();
-//                return SaResult.data(token);
-//            } else if (user.getOpenId().equals(openid)) {
-//                service.login(user);
-//                String token = StpUtil.getTokenValue();
-//                return SaResult.data(token);
+//            if (openid.equals("invalid")) {
+//                return SaResult.error("code无效");
 //            }
-//        } else if (user.getUsername().equals(username) && user.getPassword().equals(password) && !user.getOpenId().equals(openid)) {
-//            return SaResult.error("该用户已绑定其他微信号");
-//        } else if (user.getUsername().equals(username) && !user.getPassword().equals(password)) {
-//            return SaResult.error("密码错误");
-//        } else if (!user.getUsername().equals(username) && user.getPassword().equals(password)) {
-//            return SaResult.error("用户名错误");
+//
+//            if (user == null) {
+//                return SaResult.error("用户不存在");
+//            } else {
+//                if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+//                    //判断openid是否为空,如果为空则为首次登录,更新openid,如果不为空则比较openid是否相同,如果相同则登录成功,如果不同则登录失败
+//                    if (user.getOpenId() == null || Objects.equals(user.getOpenId(), "")) {
+//                        //向该用户添加openid
+//                        UserModel userModel = new UserModel();
+//                        userModel.setId(user.getId());
+//                        userModel.setName(user.getName());
+//                        userModel.setUsername(user.getUsername());
+//                        userModel.setPassword(user.getPassword());
+//                        userModel.setOpenId(openid);
+//                        //首次登录将openid记入数据库
+//                        service.updateUser(userModel);
+//                        service.login(user);
+//                        String token = StpUtil.getTokenValue();
+//                        return SaResult.data(token);
+//                    } else if (user.getOpenId().equals(openid)) {
+//                        service.login(user);
+//                        String token = StpUtil.getTokenValue();
+//                        return SaResult.data(token);
+//                    }
+//                } else if (user.getUsername().equals(username) && user.getPassword().equals(password) && !user.getOpenId().equals(openid)) {
+//                    return SaResult.error("该用户已绑定其他微信号");
+//                } else if (user.getUsername().equals(username) && !user.getPassword().equals(password)) {
+//                    return SaResult.error("密码错误");
+//                } else if (!user.getUsername().equals(username) && user.getPassword().equals(password)) {
+//                    return SaResult.error("用户名错误");
+//                } else {
+//                    return SaResult.error("登录失败");
+//                }
+//            }
 //        }
         return SaResult.error("登录失败");
     }
